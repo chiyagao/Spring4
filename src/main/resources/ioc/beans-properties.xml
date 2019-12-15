@@ -15,10 +15,11 @@
     <context:property-placeholder location="ioc/db.properties"/>
 
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <!-- 使用外部化属性文件的属性 -->
-        <property name="user" value="${user}"></property>
-        <property name="password" value="${password}"></property>
-        <property name="driverClass" value="${driverClass}"></property>
-        <property name="jdbcUrl" value="${jdbcUrl}"/>
+
+        <!-- 使用外部化属性文件的属性,此处为 EL 表达式 -->
+        <property name="user" value="${db.user}"></property>
+        <property name="password" value="${db.password}"></property>
+        <property name="driverClass" value="${db.driverClass}"></property>
+        <property name="jdbcUrl" value="${db.jdbcUrl}"/>
     </bean>
 </beans>
