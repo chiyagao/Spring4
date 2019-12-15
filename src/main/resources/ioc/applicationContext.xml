@@ -112,15 +112,14 @@
         </property>
     </bean>
 
-
-    <!-- 配置 Properties 属性值 -->
+<!-- 9.配置 Properties 属性值 -->
     <bean id="dataSource" class="spring.beans.collection.DataSource">
         <property name="properties">
             <!-- 使用 props 和 prop 子节点来为 Properties 属性赋值 -->
             <props>
-                <prop key="user">root</prop>
+                <prop key="user">ioc_root</prop>
                 <prop key="password">5206721</prop>
-                <prop key="jdbcUrl">jdbc:mysql:///test</prop>
+                <prop key="jdbcUrl">jdbc:mysql:///applicationContext/test</prop>
                 <prop key="driverClass">com.mysql.jdbc.Driver</prop>
             </props>
         </property>

@@ -14,8 +14,6 @@ public class Main {
         result = arithmeticCalculator.add(4,6);
         System.out.println("-->" + result);
 
-        System.out.println("");
-
         result = arithmeticCalculator.div(12,6);
         System.out.println("-->" + result);
 

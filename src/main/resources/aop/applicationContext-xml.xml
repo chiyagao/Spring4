@@ -4,12 +4,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 配置 bean -->
-    <bean id="arithmeticCalculator" class="spring.aop.xml.ArithmeticCalculatorLoggingImpl"></bean>
+    <bean id="arithmeticCalculator" class="spring.aop.xml.ArithmeticCalculatorLoggingImpl"/>
 
     <!-- 配置切面的 bean -->
-    <bean id="loggingAspect" class="spring.aop.xml.LoggingAspect"></bean>
+    <bean id="loggingAspect" class="spring.aop.xml.LoggingAspect"/>
 
-    <bean id="vlidationAspect" class="spring.aop.xml.VlidationAspect"></bean>
+    <bean id="vlidationAspect" class="spring.aop.xml.VlidationAspect"/>
     
     <!-- 配置 AOP -->
     <aop:config>
@@ -17,16 +17,16 @@
         <aop:pointcut id="pointcut" expression="execution(* spring.aop.xml.ArithmeticCalculator.*(..))" />
         <!-- 配置切面及通知 -->
         <aop:aspect ref="loggingAspect" order="2">
-            <aop:before method="beforeMethod" pointcut-ref="pointcut"></aop:before>
-            <aop:after method="afterMethod" pointcut-ref="pointcut"></aop:after>
-            <aop:after-throwing method="afterThrowing" pointcut-ref="pointcut" throwing="e"></aop:after-throwing>
-            <aop:after-returning method="afterReturning" pointcut="execution(* spring.aop.xml.ArithmeticCalculator.*(..))"  returning="result"></aop:after-returning>
+            <aop:before method="beforeMethod" pointcut-ref="pointcut"/>
+            <aop:after method="afterMethod" pointcut-ref="pointcut"/>
+            <aop:after-throwing method="afterThrowing" pointcut-ref="pointcut" throwing="e"/>
+            <aop:after-returning method="afterReturning" pointcut="execution(* spring.aop.xml.ArithmeticCalculator.*(..))"  returning="result"/>
 
             <!--<aop:around method="aroundMethod" pointcut-ref="pointcut" ></aop:around>-->
         </aop:aspect>
 
         <aop:aspect ref="vlidationAspect" order="1">
-            <aop:before method="validaArgs" pointcut-ref="pointcut"></aop:before>
+            <aop:before method="validaArgs" pointcut-ref="pointcut"/>
         </aop:aspect>
     </aop:config>
     

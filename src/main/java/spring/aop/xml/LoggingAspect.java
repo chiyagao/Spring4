@@ -44,7 +44,7 @@ public class LoggingAspect {
 
 
     public Object aroundMethod(ProceedingJoinPoint pjd){
-        Object result  = null;
+        Object result;
         String methodName = pjd.getSignature().getName();
         try {
             //1.前置通知

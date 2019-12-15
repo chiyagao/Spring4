@@ -5,21 +5,21 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!--    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="user" value="root"></property>
-        <property name="password" value="5206721"></property>
-        <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+        <property name="user" value="root"/>
+        <property name="password" value="5206721"/>
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
         <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/jc_xs2"/>
     </bean>-->
 
     <!-- 导入属性文件 -->
-    <context:property-placeholder location="ioc/db.properties"/>
 
+    <context:property-placeholder location="ioc/db.properties"/>
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 
         <!-- 使用外部化属性文件的属性,此处为 EL 表达式 -->
-        <property name="user" value="${db.user}"></property>
-        <property name="password" value="${db.password}"></property>
-        <property name="driverClass" value="${db.driverClass}"></property>
-        <property name="jdbcUrl" value="${db.jdbcUrl}"/>
+        <property name="user" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="driverClass" value="${jdbc.driverClass}"/>
+        <property name="jdbcUrl" value="${jdbc.jdbcUrl}"/>
     </bean>
 </beans>
