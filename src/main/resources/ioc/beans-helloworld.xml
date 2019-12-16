@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd ">
+
+    <!--
+        1. setter方法 属性注入 ——配置bean
+        class： bean 的全类名，通过反射的方式在 IOC容器中创建 Bean ，要求 Bean 中必须有无参数的构造器
+        id：给容器 bean 进行标识，id 唯一。
+    -->
+    <bean id="helloWorld2" class="spring.beans.helloworld.HelloWorld">
+        <property name="name2" value="My Spring name"/>
+    </bean>
+
+    <!--
+        2. 构造方法 ——配置 bean
+    -->
+    <bean id="car0" class="spring.beans.helloworld.Car">
+        <constructor-arg value="Audi" index="0"/>
+        <constructor-arg value="ShangHai" index="1"/>
+        <constructor-arg value="250" type="int"/>
+    </bean>
+
+    <!--
+        2.1使用构造器注入属性值可以指定参数的 位置 和 参数的类型 ！以区分重载的构造器！
+    -->
+    <bean id="car2" class="spring.beans.helloworld.Car">
+        <constructor-arg value="Baoma" type="java.lang.String"/>
+<!-- 3.1 如果字面值包含特殊字符可以使用 <![CDATA[]]> 包裹起来-->
+        <!-- 3.2 属性值可以使用 value 子节点进行配置-->
+        <constructor-arg type="java.lang.String">
+            <value><![CDATA[^BeiJIng^]]></value>
+        </constructor-arg>
+        <constructor-arg type="int" value="400"/>
+    </bean>
+
+    <bean id="person" class="spring.beans.helloworld.Person">
+        <property name="name" value="Tom"/>
+        <property name="age" value="24"/>
+        <!-- 4.1 可以使用 property或constructor-arg 的 ref 属性建立 bean 之间的引用关系。-->
+
+    <!--
+        <property name="car" ref="car2"></property>
+    -->
+
+    <!--
+        <property name="car">
+            <ref bean="car2"/>
+        </property>
+    -->
+
+        <!-- 4.2 内部bean ，不能被外部引用-->
+        <property name="car">
+            <bean class="spring.beans.helloworld.Car">
+                <constructor-arg value="Ford"/>
+                <constructor-arg value="Changan"/>
+                <constructor-arg value="400000" type="double"/>
+                <constructor-arg value="350" type="int"/>
+            </bean>
+        </property>
+        <property name="Car.price" value="400001"/>
+
+    </bean>
+
+
+    <!-- 4.3 可以使用 property或constructor-arg 的 ref 属性建立 bean 之间的引用关系。-->
+    <bean id="person2" class="spring.beans.helloworld.Person">
+        <constructor-arg value="Jerry"/>
+        <constructor-arg value="22"/>
+        <constructor-arg ref="car0" type="spring.beans.helloworld.Car"/>
+        <!-- 5 为级联属性赋值  ,必须先对对象初始化后才可赋值 -->
+        <property name="Car.price" value="300000"/>
+    </bean>
+
+    <bean id="person3" class="spring.beans.helloworld.Person">
+        <constructor-arg value="Owen"/>
+        <constructor-arg value="20"/>
+        <!-- 6 测试赋值 null  ，引用数据类型默认值也是 null -->
+        <constructor-arg type="spring.beans.helloworld.Car"><null/></constructor-arg>
+    </bean>
+
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+

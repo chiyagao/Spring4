@@ -1,4 +1,4 @@
-package spring.beans;
+package spring.beans.collection;
 
 public class Car {
 

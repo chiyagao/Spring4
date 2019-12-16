@@ -8,13 +8,11 @@ public class Main {
     public static void main(String[] args) {
 
         int result;
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("aop/applicationContext.xml");
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("aop/applicationContext-impl.xml");
         ArithmeticCalculator arithmeticCalculator= (ArithmeticCalculator) ctx.getBean("arithmeticCalculator");
 
         result = arithmeticCalculator.add(3,6);
         System.out.println("-->" + result);
-
-        System.out.println("");
 
         result = arithmeticCalculator.div(12,6);
         System.out.println("-->" + result);

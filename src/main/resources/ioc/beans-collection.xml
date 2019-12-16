@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <bean id="thecar" class="spring.beans.collection.Car">
+        <constructor-arg value="Audi" index="0"/>
+        <constructor-arg value="ShangHai" index="1"/>
+        <constructor-arg value="250" type="int"/>
+    </bean>
+
+    <bean id="thecar2" class="spring.beans.collection.Car">
+        <constructor-arg value="Baoma" type="java.lang.String"/>
+        <constructor-arg type="java.lang.String"><value><![CDATA[^BeiJIng^]]></value></constructor-arg>
+        <constructor-arg type="int" value="300"/>
+    </bean>
+
+
+    <!-- 1 配置集合属性 list 数组 set ， map-->
+    <bean id="person" class="spring.beans.collection.Person">
+        <property name="name" value="Mike"/>
+        <property name="age" value="30"/>
+        <property name="cars">
+            <!-- 1.1 使用 list 节点为 List 类型的属性赋值 -->
+            <list>
+                <ref bean="thecar"></ref>
+                <ref bean="thecar2"></ref>
+                <!-- 1.2 内部 bean 为 list 节点赋值 -->
+                <bean class="spring.beans.collection.Car">
+                    <constructor-arg value="Ford"></constructor-arg>
+                    <constructor-arg value="Changan"></constructor-arg>
+                    <constructor-arg value="400000" type="double"></constructor-arg>
+                    <constructor-arg value="350" type="int"></constructor-arg>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 2 配置 map 集合属性 -->
+    <bean id="person2" class="spring.beans.collection.Person2">
+        <property name="name" value="Rose"></property>
+        <property name="age" value="28"></property>
+        <property name="cars" >
+            <!-- 2.1 使用 map 节点及 entry 子节点配置 Map 类型的成员变量 -->
+            <map>
+                <entry key="AA" value-ref="thecar"></entry>
+                <entry key="BB" value-ref="thecar2"></entry>
+            </map>
+        </property>
+    </bean>
+
+    <!-- 3.配置独立的集合 bean，以供多个 bean 进行引用,使用 util 命名空间 -->
+    <util:list id="util_cars">
+        <ref bean="thecar" />
+        <ref bean="thecar2" />
+    </util:list>
+
+    <bean id="person3" class="spring.beans.collection.Person">
+        <property name="name" value="Jack"></property>
+        <property name="age" value="29"></property>
+        <property name="cars" ref="util_cars"></property>
+    </bean>
+
+    <!-- 4.通过 p 命名空间为 bean 的属性赋值，更简化配置 -->
+    <bean id="person4" class="spring.beans.collection.Person"
+          p:name="Queen" p:age="27" p:cars-ref="util_cars"></bean>
+
+
+    <!-- 5.配置 Properties 属性值 -->
+    <bean id="dataSource" class="spring.beans.collection.DataSource">
+        <property name="properties">
+            <!-- 5.1使用 props 和 prop 子节点来为 Properties 属性赋值 -->
+            <props>
+                <prop key="user">ioc_root</prop>
+                <prop key="password">5206721</prop>
+                <prop key="jdbcUrl">jdbc:mysql:///applicationContext/test</prop>
+                <prop key="driverClass">com.mysql.jdbc.Driver</prop>
+            </props>
+        </property>
+    </bean>
+
+
+</beans>

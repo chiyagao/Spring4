@@ -1,18 +1,17 @@
 package spring.beans.collection;
 
-import spring.beans.Car;
-
 import java.util.Map;
 
-public class NewPerson {
+public class Person2 {
 
     private String name;
     private int age;
     /*引用数据类型 Car*/
+
     private Map<String, Car> cars;
 
 
-    public NewPerson() {
+    public Person2() {
     }
 
     public void setName(String name) {

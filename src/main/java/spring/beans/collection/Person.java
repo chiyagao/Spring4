@@ -1,6 +1,5 @@
 package spring.beans.collection;
 
-import spring.beans.Car;
 
 import java.util.List;
 
@@ -8,6 +7,7 @@ public class Person {
 
     private String name;
     private int age;
+
     /*引用数据类型 Car*/
     private List<Car> cars;
 
