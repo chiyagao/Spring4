@@ -8,6 +8,7 @@ public class worker {
     private int job_id;
     private String job_name;
 
+
     public Integer getId() {
         return id;
     }

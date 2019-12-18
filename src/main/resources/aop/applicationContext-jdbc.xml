@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <context:component-scan base-package="spring.aop.jdbc"></context:component-scan>
+    <context:component-scan base-package="spring.aop.tx"></context:component-scan>
 
     <!-- 导入资源文件 -->
     <context:property-placeholder location="classpath:aop/db.properties" />
 
-    <!-- 配置 C3P0 数据源 -->
+    <!-- 配置 C3P0 数据源 ,本文件命名为 dataSource1-->
     <bean id="dataSource1" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="user" value="${jdbc.user}"/>
         <property name="password" value="${jdbc.password}"/>
@@ -25,4 +26,36 @@
         <property name="dataSource" ref="dataSource1" />
     </bean>
 
+    <!-- 具名参数，配置 NamedParameterJdbcTemplate，没有无参构造器，必须为构造器配置指定参数 -->
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSource1"></constructor-arg>
+    </bean>
+
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource1"></property>
+    </bean>
+
+    <!-- 启用事务注解 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
 </beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

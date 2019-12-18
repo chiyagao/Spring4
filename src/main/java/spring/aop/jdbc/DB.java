@@ -6,11 +6,16 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class DB {
@@ -19,14 +24,56 @@ public class DB {
     private JdbcTemplate jdbcTemplate;
     private workerDao workerDao;
     private jobDao jobDao;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     {
         ctx = new ClassPathXmlApplicationContext("aop/applicationContext-jdbc.xml");
         jdbcTemplate = (JdbcTemplate) ctx.getBean("jdbcTemplate");
         workerDao = ctx.getBean(workerDao.class);
         jobDao = ctx.getBean(jobDao.class);
+        namedParameterJdbcTemplate = ctx.getBean(NamedParameterJdbcTemplate.class);
 
     }
+
+    /*
+    *使用具名参数，可以使用update(String sql,org.springframework.jdbc.core.namedparam.SqlParameterSource paramSource)进行更新
+    * 1.SQL 语句中的参数名和封装类的属性一致！
+    * 2.使用 SqlParameterSource 的 BeanPropertySqlParameterSource 实现类作为参数。
+    * */
+    @Test
+    public void testNamedParameterJdbcTemplate2(){
+        String sql = "INSERT INTO worker(name,age,job_id,job_name) " +
+                "VALUES (:workerName,:age,:job_id,:job_name)";
+
+        worker w = new worker();
+        w.setWorkerName("ABC");
+        w.setAge(18);
+        w.setJob_id(2);
+        w.setJob_name("拖地");
+
+        SqlParameterSource paramSource = new BeanPropertySqlParameterSource(w);
+        namedParameterJdbcTemplate.update(sql,paramSource);
+    }
+
+
+    /*
+    * 使用具名参数update(String sql,java.util.Map<String, ?> paramMap) 进行更新
+    * 1.多个参数，对应参数名，便于维护
+    * 2.没有封装类也可以对应参数名。
+    * */
+    @Test
+    public void testNamedParameterJdbcTemplate(){
+        String sql = "INSERT INTO worker(name,age,job_id,job_name) VALUES (:name,:age,:jId,:jName)";
+
+        Map<String,Object> paramMap = new HashMap<>();
+        paramMap.put("name","FF");
+        paramMap.put("age","20");
+        paramMap.put("jId","1");
+        paramMap.put("jName","扫地");
+
+        namedParameterJdbcTemplate.update(sql,paramMap);
+    }
+
 
     /*
     * 使用class jobDao extends JdbcDaoSupport

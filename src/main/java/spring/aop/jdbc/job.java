@@ -5,6 +5,7 @@ public class job {
     private int id;
     private String job_name;
 
+
     public int getId() {
         return id;
     }
@@ -20,6 +21,7 @@ public class job {
     public void setJob_name(String job_name) {
         this.job_name = job_name;
     }
+
 
     @Override
     public String toString() {
